@@ -1,0 +1,95 @@
+﻿<Window x:Class="teste4343.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Login - Sistema de Helpdesk" 
+        Height="600" 
+        Width="600"
+        WindowStartupLocation="CenterScreen"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        ResizeMode="NoResize">
+
+    <Grid>
+        <materialDesign:Card Margin="16" UniformCornerRadius="8">
+            <Grid Margin="16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Logo e Título -->
+                <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,20,0,30">
+                    <materialDesign:PackIcon Kind="Headset" Width="64" Height="64" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Sistema de Helpdesk" 
+                               Style="{StaticResource MaterialDesignHeadline5TextBlock}" 
+                               HorizontalAlignment="Center"
+                               Margin="0,8,0,0"/>
+                </StackPanel>
+
+                <!-- Campo de Usuário -->
+                <TextBox Grid.Row="1"
+                         x:Name="TxtUsuario"
+                         materialDesign:HintAssist.Hint="Usuário"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,8"
+                         Text="admin"/>
+
+                <!-- Campo de Senha -->
+                <PasswordBox Grid.Row="2"
+                             x:Name="TxtSenha"
+                             materialDesign:HintAssist.Hint="Senha"
+                             Style="{StaticResource MaterialDesignOutlinedPasswordBox}"
+                             Margin="0,8"
+                             Password="admin"/>
+
+                <!-- Checkbox Lembrar -->
+                <CheckBox Grid.Row="3"
+                          x:Name="ChkLembrar"
+                          Content="Lembrar usuário"
+                          Margin="0,8"/>
+
+                <!-- Mensagem de Erro -->
+                <TextBlock Grid.Row="4"
+                           x:Name="TxtMensagemErro"
+                           Foreground="Red"
+                           TextWrapping="Wrap"
+                           Visibility="Collapsed"
+                           Margin="0,8"/>
+
+                <!-- Botões -->
+                <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+                    <Button Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Content="Cancelar"
+                            Margin="8,0"
+                            Click="BtnCancelar_Click"/>
+                    <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                            Content="Entrar"
+                            Click="BtnEntrar_Click"/>
+                </StackPanel>
+            </Grid>
+        </materialDesign:Card>
+
+        <!-- Indicador de Progresso -->
+        <Grid x:Name="ProgressOverlay" 
+              Background="#80000000" 
+              Visibility="Collapsed">
+            <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}" 
+                         Value="0" 
+                         IsIndeterminate="True" 
+                         Width="48" 
+                         Height="48"/>
+        </Grid>
+    </Grid>
+</Window>

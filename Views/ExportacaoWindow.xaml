@@ -1,0 +1,109 @@
+﻿<Window x:Class="teste4343.Views.ExportacaoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Exportar Dados" 
+        Height="800" 
+        Width="600"
+        WindowStartupLocation="CenterScreen"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        FontFamily="{materialDesign:MaterialDesignFont}">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Cabeçalho -->
+        <TextBlock Text="Configurações de Exportação"
+                   Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                   Margin="0,0,0,16"/>
+
+        <!-- Configurações -->
+        <StackPanel Grid.Row="1">
+            <!-- Período -->
+            <GroupBox Header="Período"
+                      Style="{StaticResource MaterialDesignGroupBox}"
+                      Margin="0,8">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <DatePicker materialDesign:HintAssist.Hint="Data Inicial"
+                               Style="{StaticResource MaterialDesignOutlinedDatePicker}"/>
+
+                    <DatePicker Grid.Column="2"
+                               materialDesign:HintAssist.Hint="Data Final"
+                               Style="{StaticResource MaterialDesignOutlinedDatePicker}"/>
+                </Grid>
+            </GroupBox>
+
+            <!-- Filtros -->
+            <GroupBox Header="Filtros"
+                      Style="{StaticResource MaterialDesignGroupBox}"
+                      Margin="0,8">
+                <StackPanel>
+                    <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                              materialDesign:HintAssist.Hint="Departamento"
+                              Margin="0,8"
+                              ItemsSource="{Binding Departamentos}"/>
+
+                    <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                              materialDesign:HintAssist.Hint="Status"
+                              Margin="0,8"
+                              ItemsSource="{Binding Status}"/>
+
+                    <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                              materialDesign:HintAssist.Hint="Prioridade"
+                              Margin="0,8"
+                              ItemsSource="{Binding Prioridades}"/>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Opções de Exportação -->
+            <GroupBox Header="Opções de Exportação"
+                      Style="{StaticResource MaterialDesignGroupBox}"
+                      Margin="0,8">
+                <StackPanel>
+                    <CheckBox Content="Incluir Detalhes dos Chamados"
+                              Style="{StaticResource MaterialDesignCheckBox}"
+                              Margin="0,8"/>
+
+                    <CheckBox Content="Incluir Histórico de Atualizações"
+                              Style="{StaticResource MaterialDesignCheckBox}"
+                              Margin="0,8"/>
+
+                    <CheckBox Content="Incluir Anexos"
+                              Style="{StaticResource MaterialDesignCheckBox}"
+                              Margin="0,8"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+
+        <!-- Botões de Ação -->
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,16,0,0">
+            <Button Style="{StaticResource MaterialDesignOutlinedButton}"
+                    Content="Cancelar"
+                    Command="{Binding CancelarCommand}"
+                    Margin="0,0,8,0"/>
+
+            <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                    Content="Exportar"
+                    Command="{Binding ExportarCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>

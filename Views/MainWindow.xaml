@@ -1,0 +1,259 @@
+﻿<Window x:Class="teste4343.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+        xmlns:local="clr-namespace:teste4343.Views"
+        xmlns:models="clr-namespace:teste4343.Models"
+        xmlns:properties="clr-namespace:teste4343.Properties"
+        mc:Ignorable="d"
+        Title="Sistema de Helpdesk" Height="900" Width="1400"
+        WindowStartupLocation="CenterScreen"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        FontFamily="{materialDesign:MaterialDesignFont}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+
+    <materialDesign:DialogHost Identifier="RootDialog">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Barra superior -->
+            <materialDesign:ColorZone Mode="PrimaryMid" Padding="16">
+                <DockPanel>
+                    <ToggleButton x:Name="MenuToggleButton" 
+                                Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
+                    <TextBlock Text="Sistema de Helpdesk" 
+                             VerticalAlignment="Center" 
+                             Margin="16,0,0,0" 
+                             FontSize="20"/>
+                </DockPanel>
+            </materialDesign:ColorZone>
+            
+
+            <!-- Conteúdo principal -->
+            <!-- Em MainWindow.xaml -->
+            <ContentControl x:Name="MainContent" HorizontalAlignment="Right" Width="1400" />
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Menu lateral -->
+                <materialDesign:Card Width="250" 
+                   Margin="16" 
+                   Padding="8" 
+                   UniformCornerRadius="8">
+                    
+                    <StackPanel>
+                        <!-- Botão de Configurações com efeitos de hover -->
+                        <Button x:Name="BtnConfiguracoes"
+        Height="45"
+        Margin="0,5"
+        Click="BtnConfiguracoes_Click"
+        Style="{StaticResource MaterialDesignFlatButton}"
+        HorizontalContentAlignment="Left">
+                            <Button.Resources>
+                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#E8E8E8"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Resources>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Settings"
+                                Width="24"
+                                Height="24"
+                                VerticalAlignment="Center"
+                                Margin="0,0,10,0"/>
+                                <TextBlock Text="Configurações"
+                  VerticalAlignment="Center"
+                  Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+                            </StackPanel>
+                        </Button>
+
+
+
+
+
+
+
+
+                        <!-- Separador -->
+                        <Separator Margin="0,16,0,16" />
+
+                        <!-- Informações do usuário -->
+                        <StackPanel Margin="16,0,16,8">
+                            <TextBlock Text="Usuário:" FontSize="12" Opacity="0.7"/>
+                            <TextBlock Text="{Binding Source={x:Static local:UsuarioLogado.Nome}}" 
+                       FontWeight="Medium" 
+                       Margin="0,2,0,0"/>
+                            <TextBlock Text="{Binding Source={x:Static local:UsuarioLogado.TipoUsuario}}" 
+                       FontSize="12" 
+                       Opacity="0.7" 
+                       Margin="0,2,0,0"/>
+                        </StackPanel>
+
+                        <!-- Botão de Logout -->
+                        <Button x:Name="BtnLogout" 
+                Content="Sair do Sistema" 
+                Click="BtnLogout_Click"
+                Margin="16,8,16,16"
+                Style="{StaticResource MaterialDesignOutlinedButton}"
+                materialDesign:ButtonAssist.CornerRadius="4">
+                            <Button.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Logout" 
+                                               Margin="0,0,8,0"/>
+                                        <TextBlock Text="Sair do Sistema"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </Button.ContentTemplate>
+                        </Button>
+                    </StackPanel>
+                </materialDesign:Card>
+
+
+                <!-- Área de conteúdo -->
+                <Grid Grid.Column="1" Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Cards de resumo -->
+                    <WrapPanel>
+                        <materialDesign:Card Margin="8" Width="200">
+                            <Grid Margin="8">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Total de Chamados"
+                                         Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+                                <TextBlock Grid.Row="1" 
+                                         Text="0" 
+                                         x:Name="TotalChamadosText"
+                                         Style="{StaticResource MaterialDesignHeadline4TextBlock}"/>
+                            </Grid>
+                        </materialDesign:Card>
+
+                        <materialDesign:Card Margin="8" Width="200">
+                            <Grid Margin="8">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Chamados Abertos"
+                                         Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+                                <TextBlock Grid.Row="1" 
+                                         Text="0" 
+                                         x:Name="ChamadosAbertosText"
+                                         Style="{StaticResource MaterialDesignHeadline4TextBlock}"/>
+                            </Grid>
+                        </materialDesign:Card>
+
+                        <materialDesign:Card Margin="8" Width="200">
+                            <Grid Margin="8">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Em Andamento"
+                                         Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+                                <TextBlock Grid.Row="1" 
+                                         Text="0" 
+                                         x:Name="EmAndamentoText"
+                                         Style="{StaticResource MaterialDesignHeadline4TextBlock}"/>
+                            </Grid>
+                        </materialDesign:Card>
+                    </WrapPanel>
+
+                    <!-- Barra de ferramentas -->
+                    <StackPanel Grid.Row="1" 
+          Orientation="Horizontal" 
+          Margin="0,16">
+                        <Button Style="{StaticResource MaterialDesignRaisedButton}"
+            Content="Novo Chamado"
+            Click="BtnNovoChamado_Click"
+            x:Name="BtnNovoChamado"
+            Margin="0,0,8,0"/>
+
+                        <Button Style="{StaticResource MaterialDesignRaisedButton}"
+            Click="BtnRelatorios_Click"
+            x:Name="BtnRelatorios">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ChartBox" 
+                                   Margin="0,0,8,0"
+                                   VerticalAlignment="Center"/>
+                                <TextBlock Text="Relatórios"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+
+                    <!-- Lista de chamados -->
+                    <DataGrid Grid.Row="2"
+                              x:Name="ChamadosGrid"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" 
+                                              Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="Título" 
+                                              Binding="{Binding Titulo}"
+                                              Width="*"/>
+                            <DataGridTextColumn Header="Status" 
+                                              Binding="{Binding Status}"/>
+                            <DataGridTextColumn Header="Prioridade" 
+                                              Binding="{Binding Prioridade}"/>
+                            <DataGridTextColumn Header="Responsável" 
+                                              Binding="{Binding Responsavel}"/>
+                            <DataGridTemplateColumn Header="Ações">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <!-- Botão Editar -->
+                                            <Button Style="{StaticResource MaterialDesignIconButton}"
+                        ToolTip="Editar"
+                        Click="BtnEditarChamado_Click"
+                        Visibility="{Binding Source={x:Static local:UsuarioLogado.IsAdmin}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                <materialDesign:PackIcon Kind="Pencil"/>
+                                            </Button>
+
+                                            <!-- Botão Excluir -->
+                                            <Button Style="{StaticResource MaterialDesignIconButton}"
+                        ToolTip="Excluir"
+                        Click="BtnExcluirChamado_Click"
+                        Visibility="{Binding Source={x:Static local:UsuarioLogado.IsAdmin}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                <materialDesign:PackIcon Kind="Delete"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </materialDesign:DialogHost>
+</Window>

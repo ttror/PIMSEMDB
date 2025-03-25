@@ -1,0 +1,146 @@
+﻿<Window x:Class="teste4343.Views.ConfiguracoesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Configurações do Sistema" 
+        Height="1000" 
+        Width="800"
+        WindowStartupLocation="CenterScreen"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ConfigGroupBox" 
+                   TargetType="GroupBox" 
+                   BasedOn="{StaticResource MaterialDesignGroupBox}">
+                <Setter Property="Margin" Value="0,8"/>
+                <Setter Property="Padding" Value="16"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Cabeçalho -->
+        <TextBlock Text="Configurações do Sistema"
+                   Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                   Margin="0,0,0,16"/>
+
+        <!-- Conteúdo Principal -->
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- Configurações Gerais -->
+                <GroupBox Header="Configurações Gerais"
+                          Style="{StaticResource ConfigGroupBox}">
+                    <StackPanel>
+                        <ComboBox materialDesign:HintAssist.Hint="Tema"
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                  ItemsSource="{Binding Temas}"
+                                  SelectedItem="{Binding TemaSelecionado}"
+                                  Margin="0,8"/>
+
+                        <ComboBox materialDesign:HintAssist.Hint="Idioma"
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                  ItemsSource="{Binding Idiomas}"
+                                  SelectedItem="{Binding IdiomaSelecionado}"
+                                  Margin="0,8"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Configurações de Notificação -->
+                <GroupBox Header="Notificações"
+                          Style="{StaticResource ConfigGroupBox}">
+                    <StackPanel>
+                        <CheckBox Content="Ativar notificações de desktop"
+                                  IsChecked="{Binding NotificacoesDesktop}"
+                                  Margin="0,4"/>
+                        <CheckBox Content="Ativar notificações por email"
+                                  IsChecked="{Binding NotificacoesEmail}"
+                                  Margin="0,4"/>
+                        <TextBox materialDesign:HintAssist.Hint="Email para notificações"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Text="{Binding EmailNotificacoes}"
+                                 Margin="0,8"
+                                 IsEnabled="{Binding NotificacoesEmail}"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Configurações de Departamentos -->
+                <GroupBox Header="Departamentos"
+                          Style="{StaticResource ConfigGroupBox}">
+                    <StackPanel>
+                        <DataGrid ItemsSource="{Binding Departamentos}"
+                                  AutoGenerateColumns="False"
+                                  CanUserAddRows="True"
+                                  CanUserDeleteRows="True"
+                                  MaxHeight="200">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Nome"
+                                                   Binding="{Binding Nome}"
+                                                   Width="*"/>
+                                <DataGridTextColumn Header="Responsável"
+                                                   Binding="{Binding Responsavel}"
+                                                   Width="*"/>
+                                <DataGridTextColumn Header="Email"
+                                                   Binding="{Binding Email}"
+                                                   Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Configurações de Backup -->
+                <GroupBox Header="Backup"
+                          Style="{StaticResource ConfigGroupBox}">
+                    <StackPanel>
+                        <CheckBox Content="Realizar backup automático"
+                                  IsChecked="{Binding BackupAutomatico}"
+                                  Margin="0,4"/>
+                        <ComboBox materialDesign:HintAssist.Hint="Frequência do backup"
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                  ItemsSource="{Binding FrequenciasBackup}"
+                                  SelectedItem="{Binding FrequenciaBackupSelecionada}"
+                                  Margin="0,8"
+                                  IsEnabled="{Binding BackupAutomatico}"/>
+                        <TextBox materialDesign:HintAssist.Hint="Diretório de backup"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Text="{Binding DiretorioBackup}"
+                                 Margin="0,8"
+                                 IsEnabled="{Binding BackupAutomatico}"/>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Botões de Ação -->
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,16,0,0">
+            <Button Style="{StaticResource MaterialDesignOutlinedButton}"
+                    Command="{Binding RestaurarPadroesCommand}"
+                    Content="Restaurar Padrões"
+                    Margin="0,0,8,0"/>
+            <Button Style="{StaticResource MaterialDesignOutlinedButton}"
+                    Command="{Binding CancelarCommand}"
+                    Content="Cancelar"
+                    Margin="0,0,8,0"/>
+            <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                    Command="{Binding SalvarCommand}"
+                    Content="Salvar"/>
+        </StackPanel>
+    </Grid>
+</Window>
